@@ -1,0 +1,127 @@
+#! /usr/share/iverilog-0.9.7/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_6)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x177df40 .scope module, "ALU_tb" "ALU_tb" 2 3;
+ .timescale 0 0;
+v0x17a9c70_0 .var "clk", 0 0;
+v0x17a9d60_0 .net "dataAALU", 7 0, L_0x17aa300; 1 drivers
+v0x17a9e30_0 .var "dataAIn", 7 0;
+v0x17a9eb0_0 .net "dataAOut", 0 0, L_0x17aa6b0; 1 drivers
+v0x17a9f30_0 .net "dataBALU", 7 0, v0x17a9360_0; 1 drivers
+v0x17aa000_0 .var "dataBIn", 7 0;
+v0x17aa080_0 .var "loadA", 0 0;
+v0x17aa100_0 .var "loadB", 0 0;
+v0x17aa1d0_0 .var "opcode", 3 0;
+v0x17aa280_0 .net "resultOut", 7 0, L_0x17aa800; 1 drivers
+v0x17aa390_0 .var "send", 0 0;
+v0x17aa440_0 .var "sendALU", 0 0;
+L_0x17aa6b0 .part L_0x17aa560, 0, 1;
+S_0x17a95e0 .scope module, "exampleA" "ARegister" 2 15, 3 25, S_0x177df40;
+ .timescale 0 0;
+L_0x17aa300 .functor BUFZ 8, v0x17a9840_0, C4<00000000>, C4<00000000>, C4<00000000>;
+v0x17a96d0_0 .net *"_s0", 7 0, C4<zzzzzzzz>; 0 drivers
+v0x17a9790_0 .net "clk", 0 0, v0x17a9c70_0; 1 drivers
+v0x17a9840_0 .var "data", 7 0;
+v0x17a98c0_0 .alias "dataALU", 7 0, v0x17a9d60_0;
+v0x17a99a0_0 .net "dataIn", 7 0, v0x17a9e30_0; 1 drivers
+v0x17a9a20_0 .net "dataOut", 7 0, L_0x17aa560; 1 drivers
+v0x17a9ae0_0 .net "load", 0 0, v0x17aa080_0; 1 drivers
+v0x17a9b80_0 .net "send", 0 0, v0x17aa390_0; 1 drivers
+L_0x17aa560 .functor MUXZ 8, C4<zzzzzzzz>, v0x17a9840_0, v0x17aa390_0, C4<>;
+S_0x17a9170 .scope module, "exampleB" "BRegister" 2 16, 3 47, S_0x177df40;
+ .timescale 0 0;
+v0x17a92a0_0 .alias "clk", 0 0, v0x17a9790_0;
+v0x17a9360_0 .var "data", 7 0;
+v0x17a9400_0 .alias "dataALU", 7 0, v0x17a9f30_0;
+v0x17a94b0_0 .net "dataIn", 7 0, v0x17aa000_0; 1 drivers
+v0x17a9560_0 .net "load", 0 0, v0x17aa100_0; 1 drivers
+E_0x17a8f20 .event posedge, v0x17a92a0_0;
+S_0x176d8f0 .scope module, "exampleALU" "ALU" 2 17, 3 2, S_0x177df40;
+ .timescale 0 0;
+v0x177ec00_0 .alias "A", 7 0, v0x17a9d60_0;
+v0x17a8d60_0 .alias "B", 7 0, v0x17a9f30_0;
+v0x17a8e00_0 .net *"_s0", 7 0, C4<zzzzzzzz>; 0 drivers
+v0x17a8ea0_0 .net "opcode", 3 0, v0x17aa1d0_0; 1 drivers
+v0x17a8f50_0 .var "result", 7 0;
+v0x17a8ff0_0 .alias "resultOut", 7 0, v0x17aa280_0;
+v0x17a90d0_0 .net "send", 0 0, v0x17aa440_0; 1 drivers
+E_0x1780dc0 .event edge, v0x17a8d60_0, v0x177ec00_0;
+L_0x17aa800 .functor MUXZ 8, C4<zzzzzzzz>, v0x17a8f50_0, v0x17aa440_0, C4<>;
+    .scope S_0x17a95e0;
+T_0 ;
+    %wait E_0x17a8f20;
+    %load/v 8, v0x17a9ae0_0, 1;
+    %jmp/0xz  T_0.0, 8;
+    %load/v 8, v0x17a99a0_0, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x17a9840_0, 0, 8;
+T_0.0 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x17a9170;
+T_1 ;
+    %wait E_0x17a8f20;
+    %load/v 8, v0x17a9560_0, 1;
+    %jmp/0xz  T_1.0, 8;
+    %load/v 8, v0x17a94b0_0, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x17a9360_0, 0, 8;
+T_1.0 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x176d8f0;
+T_2 ;
+    %wait E_0x1780dc0;
+    %load/v 8, v0x17a8ea0_0, 4;
+    %cmpi/u 8, 0, 4;
+    %jmp/0xz  T_2.0, 4;
+    %load/v 8, v0x177ec00_0, 8;
+    %load/v 16, v0x17a8d60_0, 8;
+    %add 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x17a8f50_0, 0, 8;
+T_2.0 ;
+    %jmp T_2;
+    .thread T_2, $push;
+    .scope S_0x177df40;
+T_3 ;
+    %set/v v0x17a9c70_0, 0, 1;
+    %movi 8, 1, 8;
+    %set/v v0x17a9e30_0, 8, 8;
+    %movi 8, 2, 8;
+    %set/v v0x17aa000_0, 8, 8;
+    %set/v v0x17aa1d0_0, 0, 4;
+    %delay 2, 0;
+    %set/v v0x17aa080_0, 1, 1;
+    %set/v v0x17aa100_0, 1, 1;
+    %set/v v0x17aa390_0, 0, 1;
+    %set/v v0x17aa440_0, 0, 1;
+    %delay 5, 0;
+    %vpi_call 2 26 "$display", "t=%d, A=%8b, B=%8b", $time, v0x17a9d60_0, v0x17a9f30_0;
+    %set/v v0x17aa080_0, 0, 1;
+    %set/v v0x17aa100_0, 0, 1;
+    %set/v v0x17aa390_0, 0, 1;
+    %set/v v0x17aa440_0, 1, 1;
+    %delay 2, 0;
+    %vpi_call 2 28 "$display", "t=%d, A=%8b, B=%8b, sum=%8b", $time, v0x17a9d60_0, v0x17a9f30_0, v0x17aa280_0;
+    %delay 5, 0;
+    %vpi_call 2 29 "$finish";
+    %end;
+    .thread T_3;
+    .scope S_0x177df40;
+T_4 ;
+    %delay 5, 0;
+    %load/v 8, v0x17a9c70_0, 1;
+    %inv 8, 1;
+    %set/v v0x17a9c70_0, 8, 1;
+    %jmp T_4;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench.sv";
+    "design.sv";

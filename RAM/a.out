@@ -1,0 +1,110 @@
+#! /usr/share/iverilog-0.9.7/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_6)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x1cffcd0 .scope module, "MainMemory_tb" "MainMemory_tb" 2 3;
+ .timescale 0 0;
+v0x1d39040_0 .var "address", 7 0;
+v0x1d390e0_0 .var "manual_data", 3 0;
+v0x1d39190_0 .var "manual_mode", 0 0;
+v0x1d39240_0 .var "r_enable", 0 0;
+v0x1d39320_0 .var "w_enable", 0 0;
+v0x1d393d0_0 .net "wbus_data", 3 0, L_0x1d394f0; 1 drivers
+S_0x1d24d70 .scope module, "example_tb" "MainMemory" 2 9, 3 2, S_0x1cffcd0;
+ .timescale 0 0;
+v0x1d24e60_0 .net *"_s0", 3 0, L_0x1d39450; 1 drivers
+v0x1d389c0_0 .net *"_s2", 3 0, C4<zzzz>; 0 drivers
+v0x1d38a60_0 .net "address", 7 0, v0x1d39040_0; 1 drivers
+v0x1d38b00_0 .var/i "k", 31 0;
+v0x1d38bb0_0 .net "manual_data", 3 0, v0x1d390e0_0; 1 drivers
+v0x1d38c50_0 .net "manual_mode", 0 0, v0x1d39190_0; 1 drivers
+v0x1d38d30_0 .net "r_enable", 0 0, v0x1d39240_0; 1 drivers
+v0x1d38dd0 .array "ram", 255 0, 3 0;
+v0x1d38ea0_0 .net "w_enable", 0 0, v0x1d39320_0; 1 drivers
+v0x1d38f40_0 .alias "wbus_data", 3 0, v0x1d393d0_0;
+E_0x1cfff00 .event posedge, v0x1d38ea0_0;
+L_0x1d39450 .array/port v0x1d38dd0, v0x1d39040_0;
+L_0x1d394f0 .functor MUXZ 4, C4<zzzz>, L_0x1d39450, v0x1d39240_0, C4<>;
+    .scope S_0x1d24d70;
+T_0 ;
+    %set/v v0x1d38b00_0, 0, 32;
+T_0.0 ;
+    %load/v 8, v0x1d38b00_0, 32;
+   %cmpi/s 8, 256, 32;
+    %jmp/0xz T_0.1, 5;
+    %ix/getv/s 3, v0x1d38b00_0;
+   %jmp/1 t_0, 4;
+   %ix/load 1, 0, 0;
+   %set/av v0x1d38dd0, 0, 4;
+t_0 ;
+    %ix/load 0, 1, 0;
+    %load/vp0/s 8, v0x1d38b00_0, 32;
+    %set/v v0x1d38b00_0, 8, 32;
+    %jmp T_0.0;
+T_0.1 ;
+    %end;
+    .thread T_0;
+    .scope S_0x1d24d70;
+T_1 ;
+    %wait E_0x1cfff00;
+    %load/v 8, v0x1d38c50_0, 1;
+    %jmp/0xz  T_1.0, 8;
+    %load/v 8, v0x1d38bb0_0, 4;
+    %ix/getv 3, v0x1d38a60_0;
+    %jmp/1 t_1, 4;
+    %ix/load 0, 4, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x1d38dd0, 0, 8;
+t_1 ;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/v 8, v0x1d38f40_0, 4;
+    %ix/getv 3, v0x1d38a60_0;
+    %jmp/1 t_2, 4;
+    %ix/load 0, 4, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x1d38dd0, 0, 8;
+t_2 ;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x1cffcd0;
+T_2 ;
+    %movi 8, 12, 8;
+    %set/v v0x1d39040_0, 8, 8;
+    %set/v v0x1d39320_0, 1, 1;
+    %set/v v0x1d39240_0, 0, 1;
+    %set/v v0x1d39190_0, 1, 1;
+    %movi 8, 10, 4;
+    %set/v v0x1d390e0_0, 8, 4;
+    %delay 5, 0;
+    %set/v v0x1d39320_0, 0, 1;
+    %set/v v0x1d39240_0, 1, 1;
+    %set/v v0x1d39190_0, 0, 1;
+    %delay 2, 0;
+    %vpi_call 2 25 "$display", "t=%d, data at location=%4b", $time, v0x1d393d0_0;
+    %movi 8, 10, 8;
+    %set/v v0x1d39040_0, 8, 8;
+    %set/v v0x1d39320_0, 1, 1;
+    %set/v v0x1d39240_0, 0, 1;
+    %set/v v0x1d39190_0, 1, 1;
+    %movi 8, 14, 4;
+    %set/v v0x1d390e0_0, 8, 4;
+    %delay 5, 0;
+    %set/v v0x1d39320_0, 0, 1;
+    %set/v v0x1d39240_0, 1, 1;
+    %set/v v0x1d39190_0, 0, 1;
+    %delay 2, 0;
+    %vpi_call 2 38 "$display", "t=%d, data at location=%4b", $time, v0x1d393d0_0;
+    %delay 5, 0;
+    %vpi_call 2 41 "$finish";
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench.sv";
+    "design.sv";
