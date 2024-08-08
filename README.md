@@ -1,2 +1,2 @@
-# EEE415-Microprocessor-and-Embedded-Systems
-All assignments and code developments for EEE 415: Microprocessor and Embedded Systems are stored here
+# EEE3104-Microprocessor-and-Interfacing-Laboratory
+All code developments for EEE 3104: Microprocessor and Interfacing Laboratory are stored here
